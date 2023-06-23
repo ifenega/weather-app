@@ -18,7 +18,7 @@ const Home = () => {
   const [active, setActive] = useState('London')
   const dispatch = useDispatch()
   const weather = useSelector(state => state.weather)
-  console.log(weather)
+
   const [loader, setLoader] = useState(true)
 
 
@@ -27,17 +27,16 @@ const Home = () => {
   let latitude = 0
 
   const getLocation = async () => {
-
+    console.log(navigator.geolocation)
     if (navigator.geolocation) {
-
       navigator.geolocation.getCurrentPosition((item) => {
         // latitude = item.coords.latitude
         // longitude = item.coords.longitude
-        console.log(item.coords.latitude)
+
         dispatch(currentWeather({ lat: item.coords.latitude, lon: item.coords.longitude })).unwrap()
           .then((response) => {
             setLoader(false)
-            // console.log(response)
+
           })
           .catch((err) => {
             setLoader(false)
@@ -46,7 +45,16 @@ const Home = () => {
 
       });
     } else {
-      console.log('unavailable')
+      console.log('2')
+      dispatch(currentWeather({ city: 'Akure' })).unwrap()
+        .then((response) => {
+          setLoader(false)
+          // console.log(response)
+        })
+        .catch((err) => {
+          setLoader(false)
+          console.log(err)
+        })
     }
 
   }
@@ -58,14 +66,14 @@ const Home = () => {
 
   const fastCheck = (values) => {
     dispatch(currentWeatherCity({ city: values.search })).unwrap()
-    .then((response) => {
-      setLoader(false)
-      // console.log(response)
-    })
-    .catch((err) => {
-      setLoader(false)
-      console.log(err)
-    })
+      .then((response) => {
+        setLoader(false)
+        // console.log(response)
+      })
+      .catch((err) => {
+        setLoader(false)
+        console.log(err)
+      })
   }
 
 
@@ -158,23 +166,23 @@ const Home = () => {
                   <h1 onClick={() => {
                     setFieldValue('search', 'Lagos')
                     setActive("Lagos")
-                    fastCheck({search:'Lagos'})
+                    fastCheck({ search: 'Lagos' })
                   }} className={`font-medium cursor-pointer text-lg sm:text-lg 2xl:text-4xl  ${active === "Lagos" ? "text-white" : "text-white/60"}`}>Lagos</h1>
                   <h1 onClick={() => {
                     setFieldValue('search', 'London')
                     setActive("London")
-                    fastCheck({search:'London'})
+                    fastCheck({ search: 'London' })
 
                   }} className={`font-medium cursor-pointer text-lg sm:text-lg 2xl:text-4xl  ${active === "London" ? "text-white" : "text-white/60"}`}>London</h1>
                   <h1 onClick={() => {
                     setFieldValue('search', 'New York')
                     setActive("New York")
-                    fastCheck({search:'New York'})
+                    fastCheck({ search: 'New York' })
                   }} className={`font-medium cursor-pointer text-lg sm:text-lg 2xl:text-4xl  ${active === "New York" ? "text-white" : "text-white/60"}`}>New York</h1>
                   <h1 onClick={() => {
                     setFieldValue('search', 'Monaco')
                     setActive("Monaco")
-                    fastCheck({search:'Monaco'})
+                    fastCheck({ search: 'Monaco' })
                   }} className={`font-medium cursor-pointer text-lg sm:text-lg 2xl:text-4xl  ${active === "Monaco" ? "text-white" : "text-white/60"}`}>Monaco</h1>
                 </div>
 
